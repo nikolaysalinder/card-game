@@ -10,7 +10,7 @@
         @click="checkCard(card)"
       >
         <div class="card__front">
-          <img src="@/assets/logo.png" alt="Avatar" class="flip__image" />
+          <img src="@/assets/brain.jpg" alt="Avatar" class="card__cover" />
         </div>
         <div class="card__back">
           <h1>{{ card.meta }}</h1>
@@ -27,49 +27,54 @@ export default {
     return {
       firstActiveCard: null,
       secondActiveCard: null,
-      cards: [
-        {
-          id: 1,
-          meta: 1,
-          isActive: true,
-        },
-        {
-          id: 2,
-          meta: 1,
-          isActive: true,
-        },
-        {
-          id: 3,
-          meta: 2,
-          isActive: true,
-        },
-        {
-          id: 4,
-          meta: 2,
-          isActive: true,
-        },
-        {
-          id: 5,
-          meta: 3,
-          isActive: true,
-        },
-        {
-          id: 6,
-          meta: 3,
-          isActive: true,
-        },
-        {
-          id: 7,
-          meta: 4,
-          isActive: true,
-        },
-        {
-          id: 8,
-          meta: 4,
-          isActive: true,
-        },
-      ],
+      // cards: [
+      //   {
+      //     id: 1,
+      //     meta: 1,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 2,
+      //     meta: 1,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 3,
+      //     meta: 2,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 4,
+      //     meta: 2,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 5,
+      //     meta: 3,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 6,
+      //     meta: 3,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 7,
+      //     meta: 4,
+      //     isActive: true,
+      //   },
+      //   {
+      //     id: 8,
+      //     meta: 4,
+      //     isActive: true,
+      //   },
+      // ],
     };
+  },
+  computed: {
+    cards() {
+      return this.$store.getters.cards;
+    },
   },
   methods: {
     checkCard(card) {
@@ -81,7 +86,7 @@ export default {
           this.firstActiveCard = null;
           this.secondActiveCard = null;
           console.log(this.firstActiveCard);
-        }, 2000);
+        }, 3000);
       } else if (!this.secondActiveCard) {
         this.secondActiveCard = card;
         if (this.firstActiveCard.meta == this.secondActiveCard.meta) {
@@ -108,14 +113,16 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 1200px;
+  width: 600px;
+  margin: 0 auto;
 }
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .card {
   background-color: transparent;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   border: 3px solid grey;
+  box-sizing: border-box;
   perspective: 1000px;
   &__inner {
     position: relative;
@@ -125,12 +132,16 @@ export default {
     transition: transform 0.5s;
     transform-style: preserve-3d;
   }
+  &__cover {
+    width: 100%;
+    margin-top: 45px;
+  }
   &__front {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    background-color: #c4c4c4;
+    background-color: #d4e1de;
     color: #000;
   }
   &__back {
