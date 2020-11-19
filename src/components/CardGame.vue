@@ -1,14 +1,19 @@
 <template>
   <div class="cards">
-    <div class="card">
-      <div class="card__inner" @click="flipCard(card)">
+    <div class="card" v-for="card in cards" :key="card.id">
+      <div
+        class="card__inner"
+        :class="{
+          card__active: card == firstActiveCard || card == secondActiveCard,
+          card__hidden: !card.isActive,
+        }"
+        @click="checkCard(card)"
+      >
         <div class="card__front">
-          <img src="../assets/logo.png" alt="Avatar" class="flip__image" />
+          <img src="@/assets/logo.png" alt="Avatar" class="flip__image" />
         </div>
         <div class="card__back">
-          <h1>John Doe</h1>
-          <p>Architect & Engineer</p>
-          <p>We love that guy</p>
+          <h1>{{ card.meta }}</h1>
         </div>
       </div>
     </div>
@@ -18,12 +23,80 @@
 <script>
 export default {
   name: "CardGame",
-  props: {
-    msg: String,
+  data() {
+    return {
+      firstActiveCard: null,
+      secondActiveCard: null,
+      cards: [
+        {
+          id: 1,
+          meta: 1,
+          isActive: true,
+        },
+        {
+          id: 2,
+          meta: 1,
+          isActive: true,
+        },
+        {
+          id: 3,
+          meta: 2,
+          isActive: true,
+        },
+        {
+          id: 4,
+          meta: 2,
+          isActive: true,
+        },
+        {
+          id: 5,
+          meta: 3,
+          isActive: true,
+        },
+        {
+          id: 6,
+          meta: 3,
+          isActive: true,
+        },
+        {
+          id: 7,
+          meta: 4,
+          isActive: true,
+        },
+        {
+          id: 8,
+          meta: 4,
+          isActive: true,
+        },
+      ],
+    };
   },
-  data() {},
   methods: {
-    flipCard() {},
+    checkCard(card) {
+      console.log(card);
+      if (!this.firstActiveCard) {
+        this.firstActiveCard = card;
+
+        setTimeout(() => {
+          this.firstActiveCard = null;
+          this.secondActiveCard = null;
+          console.log(this.firstActiveCard);
+        }, 2000);
+      } else if (!this.secondActiveCard) {
+        this.secondActiveCard = card;
+        if (this.firstActiveCard.meta == this.secondActiveCard.meta) {
+          setTimeout(() => {
+            this.cards.map((item) => {
+              if (this.firstActiveCard == item) {
+                item.isActive = false;
+              } else if (this.secondActiveCard == item) {
+                item.isActive = false;
+              }
+            });
+          }, 1000);
+        }
+      }
+    },
   },
 };
 </script>
@@ -32,6 +105,10 @@ export default {
 <style lang="scss" scoped>
 .cards {
   outline: 1px solid green;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1200px;
 }
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .card {
@@ -65,8 +142,11 @@ export default {
     color: #fff;
     transform: rotateY(180deg);
   }
-  &:hover .card__inner {
+  &__active {
     transform: rotateY(180deg);
+  }
+  &__hidden {
+    display: none;
   }
 }
 </style>
