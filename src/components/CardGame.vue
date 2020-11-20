@@ -4,10 +4,10 @@
       <div
         class="card__inner"
         :class="{
-          card__active: card == firstActiveCard || card == secondActiveCard,
+          card__isOpen: card.isOpen,
           card__hidden: !card.isActive,
         }"
-        @click="checkCard(card)"
+        @click="openCard(card)"
       >
         <div class="card__front">
           <img src="@/assets/brain.jpg" alt="Avatar" class="card__cover" />
@@ -21,12 +21,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "CardGame",
   data() {
     return {
-      firstActiveCard: null,
-      secondActiveCard: null,
+      timer: null,
       // cards: [
       //   {
       //     id: 1,
@@ -72,33 +72,44 @@ export default {
     };
   },
   computed: {
-    cards() {
-      return this.$store.getters.cards;
-    },
+    ...mapGetters(["firstOpenCard", "secondOpenCard", "cards"]),
   },
   methods: {
-    checkCard(card) {
-      console.log(card);
-      if (!this.firstActiveCard) {
-        this.firstActiveCard = card;
-
-        setTimeout(() => {
-          this.firstActiveCard = null;
-          this.secondActiveCard = null;
-          console.log(this.firstActiveCard);
-        }, 3000);
-      } else if (!this.secondActiveCard) {
-        this.secondActiveCard = card;
-        if (this.firstActiveCard.meta == this.secondActiveCard.meta) {
-          setTimeout(() => {
-            this.cards.map((item) => {
-              if (this.firstActiveCard == item) {
-                item.isActive = false;
-              } else if (this.secondActiveCard == item) {
-                item.isActive = false;
-              }
-            });
-          }, 1000);
+    openCard(card) {
+      if (!this.firstOpenCard) {
+        this.$store.dispatch("openCard", card);
+        this.$store.dispatch("setFirstOpenCard", card);
+        this.timer = setTimeout(() => {
+          console.log("from interval");
+          if (this.firstOpenCard) {
+            this.$store.dispatch("closeFirstCard");
+          }
+          if (this.secondOpenCard) {
+            this.$store.dispatch("closeSecondCard");
+          }
+          this.$store.dispatch("unsetOpenCard");
+        }, 5000);
+      } else if (!this.secondOpenCard) {
+        if (this.firstOpenCard.id != card.id) {
+          this.$store.dispatch("openCard", card);
+          this.$store.dispatch("setSecondOpenCard", card);
+          if (this.firstOpenCard.meta == this.secondOpenCard.meta) {
+            setTimeout(() => {
+              clearTimeout(this.timer);
+              this.$store.dispatch("deactivatedCard", this.firstOpenCard);
+              this.$store.dispatch("deactivatedCard", this.secondOpenCard);
+              this.$store.dispatch("unsetOpenCard");
+            }, 500);
+            console.log(this.timer);
+            console.log(" oni ravni");
+          } else {
+            setTimeout(() => {
+              clearTimeout(this.timer);
+              this.$store.dispatch("closeFirstCard");
+              this.$store.dispatch("closeSecondCard");
+              this.$store.dispatch("unsetOpenCard");
+            }, 500);
+          }
         }
       }
     },
@@ -134,7 +145,7 @@ export default {
   }
   &__cover {
     width: 100%;
-    margin-top: 45px;
+    margin-top: 30px;
   }
   &__front {
     position: absolute;
@@ -153,7 +164,7 @@ export default {
     color: #fff;
     transform: rotateY(180deg);
   }
-  &__active {
+  &__isOpen {
     transform: rotateY(180deg);
   }
   &__hidden {
