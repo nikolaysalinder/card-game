@@ -26,18 +26,23 @@ export default {
   name: "CardGame",
   data() {
     return {
-      timer: null,
+      openCardTimer: null,
     };
   },
   computed: {
-    ...mapGetters(["firstOpenCard", "secondOpenCard", "cards"]),
+    ...mapGetters([
+      "firstOpenCard",
+      "secondOpenCard",
+      "cards",
+      "isGameStarted",
+    ]),
   },
   methods: {
     openCard(card) {
       if (!this.firstOpenCard) {
         this.$store.dispatch("openCard", card);
         this.$store.dispatch("setFirstOpenCard", card);
-        this.timer = setTimeout(() => {
+        this.openCardTimer = setTimeout(() => {
           if (this.firstOpenCard) {
             this.$store.dispatch("closeFirstCard");
           }
@@ -52,18 +57,18 @@ export default {
           this.$store.dispatch("setSecondOpenCard", card);
           if (this.firstOpenCard.meta == this.secondOpenCard.meta) {
             setTimeout(() => {
-              clearTimeout(this.timer);
+              clearTimeout(this.openCardTimer);
               this.$store.dispatch("deactivatedCard", this.firstOpenCard);
               this.$store.dispatch("deactivatedCard", this.secondOpenCard);
               this.$store.dispatch("unsetOpenCard");
-            }, 500);
+            }, 300);
           } else {
             setTimeout(() => {
-              clearTimeout(this.timer);
+              clearTimeout(this.openCardTimer);
               this.$store.dispatch("closeFirstCard");
               this.$store.dispatch("closeSecondCard");
               this.$store.dispatch("unsetOpenCard");
-            }, 500);
+            }, 300);
           }
         }
       }
@@ -98,7 +103,7 @@ export default {
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.5s;
+    transition: transform 0.3s;
     transform-style: preserve-3d;
   }
   &__cover {
@@ -118,7 +123,7 @@ export default {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    background-color: #343434;
+    background-color: #c4c4c4;
     color: #fff;
     transform: rotateY(180deg);
   }

@@ -5,6 +5,7 @@ const store = createStore({
     firstOpenCard: null,
     secondOpenCard: null,
     finishedCounter: 0,
+    isGameStarted: false,
     cards: [
       {
         id: 1,
@@ -287,7 +288,7 @@ const store = createStore({
   },
   getters: {
     cards(state) {
-      return state.cards; //.sort(() => Math.random() - 0.5);
+      return state.cards.sort(() => Math.random() - 0.5);
     },
     firstOpenCard(state) {
       return state.firstOpenCard;
