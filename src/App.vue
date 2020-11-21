@@ -1,14 +1,18 @@
 <template>
+  <h1>Игра память</h1>
+  <StopWatch />
   <CardGame />
 </template>
 
 <script>
 import CardGame from "./components/CardGame.vue";
+import StopWatch from "./components/StopWatch.vue";
 
 export default {
   name: "App",
   components: {
     CardGame,
+    StopWatch,
   },
 };
 </script>

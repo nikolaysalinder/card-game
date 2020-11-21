@@ -13,7 +13,7 @@
           <img src="@/assets/brain.jpg" alt="Avatar" class="card__cover" />
         </div>
         <div class="card__back">
-          <h1>{{ card.meta }}</h1>
+          <img width="90" height="90" :src="getImgUrl(card.meta)" alt="" />
         </div>
       </div>
     </div>
@@ -27,48 +27,6 @@ export default {
   data() {
     return {
       timer: null,
-      // cards: [
-      //   {
-      //     id: 1,
-      //     meta: 1,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 2,
-      //     meta: 1,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 3,
-      //     meta: 2,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 4,
-      //     meta: 2,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 5,
-      //     meta: 3,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 6,
-      //     meta: 3,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 7,
-      //     meta: 4,
-      //     isActive: true,
-      //   },
-      //   {
-      //     id: 8,
-      //     meta: 4,
-      //     isActive: true,
-      //   },
-      // ],
     };
   },
   computed: {
@@ -80,7 +38,6 @@ export default {
         this.$store.dispatch("openCard", card);
         this.$store.dispatch("setFirstOpenCard", card);
         this.timer = setTimeout(() => {
-          console.log("from interval");
           if (this.firstOpenCard) {
             this.$store.dispatch("closeFirstCard");
           }
@@ -100,8 +57,6 @@ export default {
               this.$store.dispatch("deactivatedCard", this.secondOpenCard);
               this.$store.dispatch("unsetOpenCard");
             }, 500);
-            console.log(this.timer);
-            console.log(" oni ravni");
           } else {
             setTimeout(() => {
               clearTimeout(this.timer);
@@ -112,6 +67,9 @@ export default {
           }
         }
       }
+    },
+    getImgUrl(icon) {
+      return require("../assets/" + icon + ".svg");
     },
   },
 };

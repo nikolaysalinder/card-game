@@ -4,6 +4,7 @@ const store = createStore({
   state: {
     firstOpenCard: null,
     secondOpenCard: null,
+    finishedCounter: 0,
     cards: [
       {
         id: 1,
@@ -242,14 +243,12 @@ const store = createStore({
     },
     CLOSE_FIRST_CARD: (state) => {
       const firstOpenCard = state.firstOpenCard;
-      console.log("CLOSE FIRST CARD");
       const firstHideCard = state.cards.find(
         (card) => card.id == firstOpenCard.id
       );
       firstHideCard.isOpen = false;
     },
     CLOSE_SECOND_CARD: (state) => {
-      console.log("FLIP SECOND CARD");
       const secondOpenCard = state.secondOpenCard;
       const secondHideCard = state.cards.find(
         (card) => card.id == secondOpenCard.id
@@ -288,7 +287,7 @@ const store = createStore({
   },
   getters: {
     cards(state) {
-      return state.cards.sort(() => Math.random() - 0.5);
+      return state.cards; //.sort(() => Math.random() - 0.5);
     },
     firstOpenCard(state) {
       return state.firstOpenCard;
