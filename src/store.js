@@ -262,6 +262,9 @@ const store = createStore({
       );
       deactivatedCard.isActive = false;
     },
+    START_GAME: (state) => {
+      state.isGameStarted = true;
+    }
   },
   actions: {
     openCard({ commit }, card) {
@@ -285,6 +288,9 @@ const store = createStore({
     deactivatedCard({ commit }, card) {
       commit("DEACTIVATE_CARD", card);
     },
+    startGame({commit}) {
+      commit("START_GAME");
+    }
   },
   getters: {
     cards(state) {
@@ -296,6 +302,9 @@ const store = createStore({
     secondOpenCard(state) {
       return state.secondOpenCard;
     },
+    isGameStarted(state) {
+      return state.isGameStarted
+    }
   },
 });
 

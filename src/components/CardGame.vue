@@ -39,7 +39,8 @@ export default {
   },
   methods: {
     openCard(card) {
-      if (!this.firstOpenCard) {
+     if(this.isGameStarted) {
+       if (!this.firstOpenCard) {
         this.$store.dispatch("openCard", card);
         this.$store.dispatch("setFirstOpenCard", card);
         this.openCardTimer = setTimeout(() => {
@@ -61,17 +62,18 @@ export default {
               this.$store.dispatch("deactivatedCard", this.firstOpenCard);
               this.$store.dispatch("deactivatedCard", this.secondOpenCard);
               this.$store.dispatch("unsetOpenCard");
-            }, 300);
+            }, 500);
           } else {
             setTimeout(() => {
               clearTimeout(this.openCardTimer);
               this.$store.dispatch("closeFirstCard");
               this.$store.dispatch("closeSecondCard");
               this.$store.dispatch("unsetOpenCard");
-            }, 300);
+            }, 500);
           }
         }
       }
+     }
     },
     getImgUrl(icon) {
       return require("../assets/" + icon + ".svg");
@@ -103,7 +105,7 @@ export default {
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.3s;
+    transition: transform 0.5s;
     transform-style: preserve-3d;
   }
   &__cover {
@@ -117,6 +119,14 @@ export default {
     backface-visibility: hidden;
     background-color: #d4e1de;
     color: #000;
+    &:before{
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 2;
+    }
   }
   &__back {
     position: absolute;

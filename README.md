@@ -1,4 +1,4 @@
-# card-game
+# Game memory
 
 Card game
 

@@ -17,6 +17,7 @@ export default {
   },
   methods: {
     startGame() {
+      this.$store.dispatch("startGame");
       const watch = document.getElementById("watch");
       clearInterval(this.timer);
       this.timer = setInterval(() => {
