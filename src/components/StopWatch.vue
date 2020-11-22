@@ -11,9 +11,13 @@
 export default {
   data() {
     return {
-      milliseconds: 0,
       timer: null,
     };
+  },
+  computed: {
+    milliseconds() {
+      return this.$store.getters.milliseconds;
+    }
   },
   methods: {
     startGame() {
@@ -21,7 +25,7 @@ export default {
       const watch = document.getElementById("watch");
       clearInterval(this.timer);
       this.timer = setInterval(() => {
-        this.milliseconds += 10;
+        this.$store.dispatch('addSeconds', 10);
         let dateTimer = new Date(this.milliseconds);
         watch.innerHTML =
           ("0" + dateTimer.getUTCHours()).slice(-2) +
@@ -32,6 +36,7 @@ export default {
           ":" +
           ("0" + dateTimer.getUTCMilliseconds()).slice(-3, -1);
       }, 10);
+      this.$store.dispatch("setTimer", this.timer);
     },
   },
 };

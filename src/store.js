@@ -6,6 +6,8 @@ const store = createStore({
     secondOpenCard: null,
     finishedCounter: 0,
     isGameStarted: false,
+    timer: null,
+    milliseconds: 0,
     cards: [
       {
         id: 1,
@@ -264,6 +266,12 @@ const store = createStore({
     },
     START_GAME: (state) => {
       state.isGameStarted = true;
+    },
+    SET_TIMER: (state, timer) => {
+      state.timer = timer;
+    },
+    ADD_SECONDS: (state, seconds) => {
+      state.milliseconds += seconds;
     }
   },
   actions: {
@@ -285,11 +293,17 @@ const store = createStore({
     closeSecondCard({ commit }) {
       commit("CLOSE_SECOND_CARD");
     },
-    deactivatedCard({ commit }, card) {
+    deactivateCard({ commit }, card) {
       commit("DEACTIVATE_CARD", card);
     },
     startGame({commit}) {
       commit("START_GAME");
+    },
+    setTimer({commit}, timer) {
+      commit("SET_TIMER", timer);
+    },
+    addSeconds({commit}, seconds) {
+      commit("ADD_SECONDS", seconds);
     }
   },
   getters: {
@@ -303,7 +317,10 @@ const store = createStore({
       return state.secondOpenCard;
     },
     isGameStarted(state) {
-      return state.isGameStarted
+      return state.isGameStarted;
+    },
+    milliseconds(state) {
+      return state.milliseconds;
     }
   },
 });
