@@ -35,7 +35,8 @@ export default {
       "secondOpenCard",
       "cards",
       "isGameStarted",
-      "finishedCounter"
+      "finishedCounter",
+      "timer"
     ]),
   },
   methods: {
@@ -58,9 +59,11 @@ export default {
           this.$store.dispatch("openCard", card);
           this.$store.dispatch("setSecondOpenCard", card);
           if (this.firstOpenCard.meta == this.secondOpenCard.meta) {
-            this.finishedCounter += 1;
+            
+            this.$store.dispatch('addCardToCounter', 1)
             if(this.finishedCounter == 18) {
-              console.log('tot')
+              clearInterval(this.timer);
+              this.$store.dispatch('finishedGame');
             }
             setTimeout(() => {
               clearTimeout(this.openCardTimer);

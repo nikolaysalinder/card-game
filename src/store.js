@@ -8,6 +8,7 @@ const store = createStore({
     isGameStarted: false,
     timer: null,
     milliseconds: 0,
+    gameOver: false,
     cards: [
       {
         id: 1,
@@ -272,6 +273,12 @@ const store = createStore({
     },
     ADD_SECONDS: (state, seconds) => {
       state.milliseconds += seconds;
+    },
+    ADD_CARD_TO_COUNTER: (state, card) => {
+      state.finishedCounter += card;
+    },
+    FINISHED_GAME: (state) => {
+      state.gameOver = true;
     }
   },
   actions: {
@@ -304,11 +311,17 @@ const store = createStore({
     },
     addSeconds({commit}, seconds) {
       commit("ADD_SECONDS", seconds);
+    },
+    addCardToCounter({commit}, card){
+      commit("ADD_CARD_TO_COUNTER", card);
+    },
+    finishedGame({commit}) {
+      commit("FINISHED_GAME");
     }
   },
   getters: {
     cards(state) {
-      return state.cards.sort(() => Math.random() - 0.5);
+      return state.cards //.sort(() => Math.random() - 0.5);
     },
     firstOpenCard(state) {
       return state.firstOpenCard;
@@ -321,6 +334,15 @@ const store = createStore({
     },
     milliseconds(state) {
       return state.milliseconds;
+    },
+    finishedCounter(state) {
+      return state.finishedCounter;
+    },
+    timer(state) {
+      return state.timer;
+    },
+    gameOver(state) {
+      return state.gameOver;
     }
   },
 });

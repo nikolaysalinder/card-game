@@ -17,26 +17,31 @@ export default {
   computed: {
     milliseconds() {
       return this.$store.getters.milliseconds;
+    },
+    gameOver() {
+      return this.$store.getters.gameOver;
     }
   },
   methods: {
     startGame() {
-      this.$store.dispatch("startGame");
-      const watch = document.getElementById("watch");
-      clearInterval(this.timer);
-      this.timer = setInterval(() => {
-        this.$store.dispatch('addSeconds', 10);
-        let dateTimer = new Date(this.milliseconds);
-        watch.innerHTML =
-          ("0" + dateTimer.getUTCHours()).slice(-2) +
-          ":" +
-          ("0" + dateTimer.getUTCMinutes()).slice(-2) +
-          ":" +
-          ("0" + dateTimer.getUTCSeconds()).slice(-2) +
-          ":" +
-          ("0" + dateTimer.getUTCMilliseconds()).slice(-3, -1);
-      }, 10);
-      this.$store.dispatch("setTimer", this.timer);
+      if(!this.gameOver) {  
+        this.$store.dispatch("startGame");
+        const watch = document.getElementById("watch");
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
+          this.$store.dispatch('addSeconds', 10);
+          let dateTimer = new Date(this.milliseconds);
+          watch.innerHTML =
+            ("0" + dateTimer.getUTCHours()).slice(-2) +
+            ":" +
+            ("0" + dateTimer.getUTCMinutes()).slice(-2) +
+            ":" +
+            ("0" + dateTimer.getUTCSeconds()).slice(-2) +
+            ":" +
+            ("0" + dateTimer.getUTCMilliseconds()).slice(-3, -1);
+        }, 10);
+        this.$store.dispatch("setTimer", this.timer);
+      }
     },
   },
 };
