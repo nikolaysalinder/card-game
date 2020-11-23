@@ -1,19 +1,21 @@
 <template>
-  <div class="modal__mask">
-    <div class="modal__wrapper">
-      <div class="modal__container">
-        <h2 class="modal__title">Поздравляю</h2>
-        <p class="modal__desc">Ваш результат</p>
-        <p class="modal__result">{{ resultTime }}</p>
-        <label for="name">Введите Имя</label>
-        <input id="name" type="text" v-model="name" />
-        <button class="modal__button--close" @click="$emit('close')">
-          Закрыть
-        </button>
-        <button class="modal__button">Отправить</button>
+  <transition name="modal">
+    <div class="modal__mask">
+      <div class="modal__wrapper">
+        <div class="modal__container">
+          <h2 class="modal__title">Поздравляю</h2>
+          <p class="modal__desc">Ваш результат</p>
+          <p class="modal__result">{{ resultTime }}</p>
+          <label for="name">Введите Имя</label>
+          <input id="name" type="text" v-model="name" />
+          <button class="modal__button--close" @click="$emit('close')">
+            Закрыть
+          </button>
+          <button class="modal__button">Отправить</button>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -25,6 +27,7 @@ export default {
   },
   computed: {
     resultTime() {
+      console.log(this.$store.getters.milliseconds);
       let timer = new Date(this.$store.getters.milliseconds);
       let result =
         ("0" + timer.getUTCHours()).slice(-2) +
@@ -100,16 +103,16 @@ export default {
     }
   }
 }
-// .modal-enter {
-//   opacity: 0;
-// }
+.modal-enter {
+  opacity: 0;
+}
 
-// .modal-leave-active {
-//   opacity: 0;
-// }
+.modal-leave-active {
+  opacity: 0;
+}
 
-// .modal-enter .modal-container,
-// .modal-leave-active .modal-container {
-//   transform: scale(1.1);
-// }
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  transform: scale(1.1);
+}
 </style>
