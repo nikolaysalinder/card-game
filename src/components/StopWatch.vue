@@ -11,7 +11,7 @@
 export default {
   data() {
     return {
-      timer: null,
+      timer: null
     };
   },
   computed: {
@@ -24,12 +24,12 @@ export default {
   },
   methods: {
     startGame() {
-      if(!this.gameOver) {  
+      if (!this.gameOver) {
         this.$store.dispatch("startGame");
         const watch = document.getElementById("watch");
         clearInterval(this.timer);
         this.timer = setInterval(() => {
-          this.$store.dispatch('addSeconds', 10);
+          this.$store.dispatch("addSeconds", 10);
           let dateTimer = new Date(this.milliseconds);
           watch.innerHTML =
             ("0" + dateTimer.getUTCHours()).slice(-2) +
@@ -42,8 +42,8 @@ export default {
         }, 10);
         this.$store.dispatch("setTimer", this.timer);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

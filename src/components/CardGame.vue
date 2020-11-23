@@ -5,7 +5,7 @@
         class="card__inner"
         :class="{
           card__isOpen: card.isOpen,
-          card__hidden: !card.isActive,
+          card__hidden: !card.isActive
         }"
         @click="openCard(card)"
       >
@@ -26,7 +26,7 @@ export default {
   name: "CardGame",
   data() {
     return {
-      openCardTimer: null,
+      openCardTimer: null
     };
   },
   computed: {
@@ -37,56 +37,55 @@ export default {
       "isGameStarted",
       "finishedCounter",
       "timer"
-    ]),
+    ])
   },
   methods: {
     openCard(card) {
-     if(this.isGameStarted) {
-       if (!this.firstOpenCard) {
-        this.$store.dispatch("openCard", card);
-        this.$store.dispatch("setFirstOpenCard", card);
-        this.openCardTimer = setTimeout(() => {
-          if (this.firstOpenCard) {
-            this.$store.dispatch("closeFirstCard");
-          }
-          if (this.secondOpenCard) {
-            this.$store.dispatch("closeSecondCard");
-          }
-          this.$store.dispatch("unsetOpenCard");
-        }, 5000);
-      } else if (!this.secondOpenCard) {
-        if (this.firstOpenCard.id != card.id) {
+      if (this.isGameStarted) {
+        if (!this.firstOpenCard) {
           this.$store.dispatch("openCard", card);
-          this.$store.dispatch("setSecondOpenCard", card);
-          if (this.firstOpenCard.meta == this.secondOpenCard.meta) {
-            
-            this.$store.dispatch('addCardToCounter', 1)
-            if(this.finishedCounter == 18) {
-              clearInterval(this.timer);
-              this.$store.dispatch('finishedGame');
-            }
-            setTimeout(() => {
-              clearTimeout(this.openCardTimer);
-              this.$store.dispatch("deactivateCard", this.firstOpenCard);
-              this.$store.dispatch("deactivateCard", this.secondOpenCard);
-              this.$store.dispatch("unsetOpenCard");
-            }, 500);
-          } else {
-            setTimeout(() => {
-              clearTimeout(this.openCardTimer);
+          this.$store.dispatch("setFirstOpenCard", card);
+          this.openCardTimer = setTimeout(() => {
+            if (this.firstOpenCard) {
               this.$store.dispatch("closeFirstCard");
+            }
+            if (this.secondOpenCard) {
               this.$store.dispatch("closeSecondCard");
-              this.$store.dispatch("unsetOpenCard");
-            }, 500);
+            }
+            this.$store.dispatch("unsetOpenCard");
+          }, 5000);
+        } else if (!this.secondOpenCard) {
+          if (this.firstOpenCard.id != card.id) {
+            this.$store.dispatch("openCard", card);
+            this.$store.dispatch("setSecondOpenCard", card);
+            if (this.firstOpenCard.meta == this.secondOpenCard.meta) {
+              this.$store.dispatch("addCardToCounter", 1);
+              if (this.finishedCounter == 18) {
+                clearInterval(this.timer);
+                this.$store.dispatch("finishedGame");
+              }
+              setTimeout(() => {
+                clearTimeout(this.openCardTimer);
+                this.$store.dispatch("deactivateCard", this.firstOpenCard);
+                this.$store.dispatch("deactivateCard", this.secondOpenCard);
+                this.$store.dispatch("unsetOpenCard");
+              }, 500);
+            } else {
+              setTimeout(() => {
+                clearTimeout(this.openCardTimer);
+                this.$store.dispatch("closeFirstCard");
+                this.$store.dispatch("closeSecondCard");
+                this.$store.dispatch("unsetOpenCard");
+              }, 500);
+            }
           }
         }
       }
-     }
     },
     getImgUrl(icon) {
       return require("../assets/" + icon + ".svg");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -127,8 +126,8 @@ export default {
     backface-visibility: hidden;
     background-color: #d4e1de;
     color: #000;
-    &:before{
-      content: '';
+    &:before {
+      content: "";
       display: block;
       width: 100%;
       height: 100%;
