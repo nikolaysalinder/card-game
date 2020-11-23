@@ -1,18 +1,20 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <CardGame msg="Welcome to Your Vue.js App" />
+    <StopWatch />
+    <CardGame  />
   </div>
 </template>
-
+о
 <script>
 // @ is an alias to /src
 import CardGame from "@/components/CardGame.vue";
+import StopWatch from "@/components/StopWatch.vue";
 
 export default {
   name: "Home",
   components: {
-    CardGame
+    CardGame,
+    StopWatch
   }
 };
 </script>

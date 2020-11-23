@@ -5,7 +5,7 @@
         class="card__inner"
         :class="{
           card__isOpen: card.isOpen,
-          card__hidden: !card.isActive
+          card__hidden: !card.isActive,
         }"
         @click="openCard(card)"
       >
@@ -17,16 +17,22 @@
         </div>
       </div>
     </div>
+    <Modal v-if="isVisibleModal" @close="isVisibleModal = false" />
   </div>
 </template>
 
 <script>
+import Modal from "./Modal.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "CardGame",
+  components: {
+    Modal,
+  },
   data() {
     return {
-      openCardTimer: null
+      openCardTimer: null,
+      isVisibleModal: false,
     };
   },
   computed: {
@@ -36,8 +42,8 @@ export default {
       "cards",
       "isGameStarted",
       "finishedCounter",
-      "timer"
-    ])
+      "timer",
+    ]),
   },
   methods: {
     openCard(card) {
@@ -62,6 +68,7 @@ export default {
               this.$store.dispatch("addCardToCounter", 1);
               if (this.finishedCounter == 18) {
                 clearInterval(this.timer);
+                this.isVisibleModal = true;
                 this.$store.dispatch("finishedGame");
               }
               setTimeout(() => {
@@ -84,15 +91,14 @@ export default {
     },
     getImgUrl(icon) {
       return require("../assets/" + icon + ".svg");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .cards {
-  outline: 1px solid green;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

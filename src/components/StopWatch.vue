@@ -3,15 +3,19 @@
     <div class="watch__wrapper">
       <h2 id="watch">00:00:00:00</h2>
     </div>
-    <button @click="startGame" class="watch__btn" id="start">Start</button>
+    <button @click="startGame" class="watch__btn" id="start">Старт</button>
+    <button @click="newGame" class="watch__btn watch__btn--new">
+      Новая игра
+    </button>
   </section>
 </template>
 
 <script>
 export default {
+  name: "StopWatch",
   data() {
     return {
-      timer: null
+      timer: null,
     };
   },
   computed: {
@@ -20,7 +24,7 @@ export default {
     },
     gameOver() {
       return this.$store.getters.gameOver;
-    }
+    },
   },
   methods: {
     startGame() {
@@ -42,8 +46,11 @@ export default {
         }, 10);
         this.$store.dispatch("setTimer", this.timer);
       }
-    }
-  }
+    },
+    newGame() {
+      location.reload();
+    },
+  },
 };
 </script>
 
@@ -60,6 +67,9 @@ export default {
     font-weight: 600;
     border-radius: 3px;
     font-size: 23px;
+    &--new {
+      margin-left: 20px;
+    }
   }
 }
 </style>
