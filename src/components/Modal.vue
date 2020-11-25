@@ -7,11 +7,12 @@
           <p class="modal__desc">Ваш результат</p>
           <p class="modal__result">{{ resultTime }}</p>
           <label for="name">Введите Имя</label>
-          <input id="name" type="text" v-model="name" />
+          <input id="name" type="text" v-model="name" required="true" />
+
           <button class="modal__button--close" @click="$emit('close')">
             Закрыть
           </button>
-          <button class="modal__button">Отправить</button>
+          <button @click="addNewWinner" class="modal__button">Отправить</button>
         </div>
       </div>
     </div>
@@ -19,13 +20,31 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       name: "",
     };
   },
+  methods: {
+    addNewWinner() {
+      axios
+        .post("http://382271-cd73790.tmweb.ru/new-user", {
+          name: this.name,
+          result: this.result,
+        })
+        .then((res) => {
+          console.log(res);
+          this.$router.push({ path: "table" });
+        })
+        .catch((err) => console.log(err));
+    },
+  },
   computed: {
+    result() {
+      return this.$store.getters.milliseconds;
+    },
     resultTime() {
       console.log(this.$store.getters.milliseconds);
       let timer = new Date(this.$store.getters.milliseconds);
