@@ -1,6 +1,9 @@
 # Game memory
 
-Card game
+Memory game
+
+Play the game
+[http://www.salinder.ru/card-game/](http://www.salinder.ru/card-game/)
 
 MIDDLE-уровень
 
