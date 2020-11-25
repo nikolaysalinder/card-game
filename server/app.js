@@ -16,7 +16,7 @@ require("./handlers/06-session").init(app);
 require("./handlers/07-bodyParser").init(app);
 require("./handlers/08-cors").init(app);
 
-const usersRouter = new Router();
+const usersRouter = new Router({});
 
 // const todosRouter = new Router({
 //   prefix: '/todos'
@@ -44,7 +44,7 @@ usersRouter
     const user = await User.create(pick(ctx.request.body, User.publicFields));
     ctx.body = user.toObject();
   })
-  .get("/", async function (ctx) {
+  .get("/users", async function (ctx) {
     const users = await User.find({});
     ctx.body = users.map((user) => user.toObject());
   });
