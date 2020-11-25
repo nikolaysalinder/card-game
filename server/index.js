@@ -1,5 +1,8 @@
-const app = require('./app');
+const app = require("./app");
 
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000');
+const hostname = "188.225.32.243";
+const port = "8080";
+
+app.listen(port, hostname, () => {
+  console.log(`App is running on http://${hostname}:${port}`);
 });
