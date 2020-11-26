@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <StopWatch />
-    <CardGame  />
+    <CardGame />
   </div>
 </template>
 о
@@ -14,7 +14,7 @@ export default {
   name: "Home",
   components: {
     CardGame,
-    StopWatch
-  }
+    StopWatch,
+  },
 };
 </script>
