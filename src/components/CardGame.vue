@@ -13,7 +13,13 @@
           <img src="@/assets/brain.jpg" alt="Avatar" class="card__cover" />
         </div>
         <div class="card__back">
-          <img width="90" height="90" :src="getImgUrl(card.meta)" alt="" />
+          <img
+            v-if="card.isOpen"
+            width="90"
+            height="90"
+            :src="getImgUrl(card.meta)"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -61,6 +67,7 @@ export default {
             this.$store.dispatch("unsetOpenCard");
           }, 5000);
         } else if (!this.secondOpenCard) {
+          //проверка на клик по одной карте дважды
           if (this.firstOpenCard.id != card.id) {
             this.$store.dispatch("openCard", card);
             this.$store.dispatch("setSecondOpenCard", card);
