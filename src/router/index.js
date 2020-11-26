@@ -16,6 +16,10 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Table.vue"),
   },
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/",
+  },
 ];
 
 const router = createRouter({
