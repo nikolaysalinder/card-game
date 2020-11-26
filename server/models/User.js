@@ -6,7 +6,7 @@ const publicFields = ["result", "name"];
 const userSchema = new mongoose.Schema(
   {
     result: {
-      type: Number,
+      type: String,
       required: "E-mail пользователя не должен быть пустым.",
     },
     name: {

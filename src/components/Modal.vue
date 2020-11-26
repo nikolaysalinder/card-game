@@ -32,7 +32,7 @@ export default {
       axios
         .post("http://382271-cd73790.tmweb.ru/new-user", {
           name: this.name,
-          result: this.result,
+          result: this.resultTime,
         })
         .then((res) => {
           console.log(res);
@@ -49,13 +49,14 @@ export default {
       console.log(this.$store.getters.milliseconds);
       let timer = new Date(this.$store.getters.milliseconds);
       let result =
-        ("0" + timer.getUTCHours()).slice(-2) +
+        `0${timer.getUTCHours()}`.slice(-2) +
         ":" +
-        ("0" + timer.getUTCMinutes()).slice(-2) +
+        `0${timer.getUTCMinutes()}`.slice(-2) +
         ":" +
-        ("0" + timer.getUTCSeconds()).slice(-2) +
+        `0${timer.getUTCSeconds()}`.slice(-2) +
         ":" +
-        ("0" + timer.getUTCMilliseconds()).slice(-3, -1);
+        `0${timer.getUTCMilliseconds()}`.slice(-3, -1);
+      console.log(result);
       return result;
     },
   },
