@@ -4,7 +4,7 @@
     <div class="table">
       <div class="table__row">
         <div class="table__head">Имя</div>
-        <div class="table__head">Результат в миллисекундах</div>
+        <div class="table__head">Результат</div>
       </div>
       <div
         class="table__row"

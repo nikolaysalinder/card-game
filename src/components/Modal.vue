@@ -32,7 +32,7 @@ export default {
       axios
         .post("http://382271-cd73790.tmweb.ru/new-user", {
           name: this.name,
-          result: this.resultTime,
+          result: this.result,
         })
         .then((res) => {
           console.log(res);
@@ -56,7 +56,7 @@ export default {
         `0${timer.getUTCSeconds()}`.slice(-2) +
         ":" +
         `0${timer.getUTCMilliseconds()}`.slice(-3, -1);
-      console.log(result);
+
       return result;
     },
   },
