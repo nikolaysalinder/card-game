@@ -7,6 +7,12 @@
 </template>
 
 <style lang="scss">
+@import "normalize-scss";
+@include normalize();
+html,
+body {
+  min-width: 600px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
